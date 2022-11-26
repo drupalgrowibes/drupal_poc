@@ -300,6 +300,25 @@ function server_theme_theme() {
     ],
   ];
 
+  // A single person card.
+  $info['server_theme_person_card'] = [
+    'variables' => [
+      // Render array from `server_theme_person_card`.
+      'name' => NULL,
+      'dest' => NULL,
+      'role' => NULL,
+      'image_url' => NULL,
+    ],
+  ];
+
+  // A single person cards.
+  $info['server_theme_person_cards'] = [
+    'variables' => [
+      // List of person cards.
+      'items' => [],
+    ],
+  ];
+
   return $info;
 }
 
