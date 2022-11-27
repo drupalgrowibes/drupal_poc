@@ -44,8 +44,8 @@ class StyleGuideController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new self(
-          $container->get('link_generator')
-      );
+      $container->get('link_generator')
+    );
   }
 
   /**
@@ -508,7 +508,7 @@ class StyleGuideController extends ControllerBase {
     return [
       '#theme' => 'server_theme_person_card',
       '#name' => $this->t('Jane Cooper'),
-      '#dest' => $this->t('Paradigm Representative'),
+      '#destination' => $this->t('Paradigm Representative'),
       '#role' => $this->t('admin'),
       '#image_url' => 'https://i.ibb.co/b6HnFC8/Avatar.jpg',
     ];
