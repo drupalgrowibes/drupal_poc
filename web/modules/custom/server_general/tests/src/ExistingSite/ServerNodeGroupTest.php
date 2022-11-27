@@ -14,11 +14,6 @@ class ServerNodeGroupTest extends ExistingSiteBase {
   protected static $modules = ['node', 'og', 'options'];
 
   /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'seven';
-
-  /**
    * Test entity group.
    *
    * @var \Drupal\node\NodeInterface
@@ -64,9 +59,9 @@ class ServerNodeGroupTest extends ExistingSiteBase {
     // Subscribe to group and verify the links.
     $this->drupalGet($this->group->toUrl());
 
-    $userName = $this->user1->get('name')->value;
-    $groupName = $this->group->get('title')->value;
-    $text = 'Hi ' . $userName . ', click here if you would like to subscribe to this group called ' . $groupName;
+    $user_name = $this->user1->get('name')->value;
+    $group_name = $this->group->get('title')->value;
+    $text = 'Hi ' . $user_name . ', click here if you would like to subscribe to this group called ' . $group_name;
 
     $this->assertSession()->linkExists($text);
     $this->clickLink($text);

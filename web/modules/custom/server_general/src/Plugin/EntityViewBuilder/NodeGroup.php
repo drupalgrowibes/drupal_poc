@@ -68,11 +68,10 @@ class NodeGroup extends NodeViewBuilderAbstract {
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
-          $container->get('current_user'),
-          $container->get('og.access'),
-          $container->get('entity_type.manager')
-      );
-
+      $container->get('current_user'),
+      $container->get('og.access'),
+      $container->get('entity_type.manager')
+    );
   }
 
   /**
