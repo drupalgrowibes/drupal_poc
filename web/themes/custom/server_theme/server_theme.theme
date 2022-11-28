@@ -310,7 +310,7 @@ function server_theme_theme() {
     ],
   ];
 
-  // A single person cards.
+  // Person cards.
   $info['server_theme_person_cards'] = [
     'variables' => [
       // List of person cards.
