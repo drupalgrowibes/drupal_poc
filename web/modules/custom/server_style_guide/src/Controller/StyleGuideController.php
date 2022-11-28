@@ -392,13 +392,11 @@ class StyleGuideController extends ControllerBase {
    */
   protected function getPlaceholderResponsiveImageStyle(string $responsive_image_style_id = 'hero'): array {
     // Load the first media image on the site.
-    /**
-* @var \Drupal\media\MediaStorage $media_storage
-*/
+    /** @var \Drupal\media\MediaStorage $media_storage */
     $media_storage = $this->entityTypeManager()->getStorage('media');
     $media_ids = $media_storage->getQuery()
       ->condition('bundle', 'image')
-        // Get a single image.
+      // Get a single image.
       ->range(0, 1)
       ->execute();
 
@@ -408,14 +406,10 @@ class StyleGuideController extends ControllerBase {
     }
 
     $media_id = key($media_ids);
-    /**
-* @var \Drupal\media\MediaInterface $media
-*/
+    /** @var \Drupal\media\MediaInterface $media */
     $media = $media_storage->load($media_id);
 
-    /**
-* @var ?\Drupal\file\FileInterface $image
-*/
+    /** @var ?\Drupal\file\FileInterface $image */
     $image = $this->getReferencedEntityFromField($media, 'field_media_image');
     if (empty($image)) {
       // Image doesn't exist, or no access to it.
@@ -439,12 +433,10 @@ class StyleGuideController extends ControllerBase {
    *   The renderable array.
    */
   public function buildMockedTag($title) {
-    $dummy_term = Term::create(
-          [
-            'vid' => 'example_vocabulary_machine_name',
-            'name' => $title,
-          ]
-      );
+    $dummy_term = Term::create([
+      'vid' => 'example_vocabulary_machine_name',
+      'name' => $title,
+    ]);
 
     return $this->buildTag($dummy_term);
   }
