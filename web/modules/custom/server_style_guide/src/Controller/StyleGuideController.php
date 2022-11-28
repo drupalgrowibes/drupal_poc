@@ -96,6 +96,12 @@ class StyleGuideController extends ControllerBase {
     $element = $this->getSearchResult();
     $build[] = $this->wrapElementWideContainer($element, 'Search result');
 
+    $element = $this->getPersonCard();
+    $build[] = $this->wrapElementWideContainer($element, 'Person Card');
+
+    $element = $this->getPersonCards();
+    $build[] = $this->wrapElementWideContainer($element, 'Person Cards');
+
     return $build;
   }
 
@@ -481,6 +487,52 @@ class StyleGuideController extends ControllerBase {
       ] + $element_base;
     }
     return $elements;
+  }
+
+  /**
+   * Get Person Card.
+   *
+   * @return array
+   *   Render array.
+   */
+  protected function getPersonCard(): array {
+
+    return [
+      '#theme' => 'server_theme_person_card',
+      '#name' => $this->t('Jane Cooper'),
+      '#destination' => $this->t('Paradigm Representative'),
+      '#role' => $this->t('admin'),
+      '#image_url' => 'https://i.ibb.co/b6HnFC8/Avatar.jpg',
+    ];
+  }
+
+  /**
+   * Get Person Cards.
+   *
+   * @return array
+   *   Render array.
+   */
+  protected function getPersonCards(): array {
+
+    $presonCard = $this->getPersonCard();
+
+    $items = [
+      $presonCard,
+      $presonCard,
+      $presonCard,
+      $presonCard,
+      $presonCard,
+      $presonCard,
+      $presonCard,
+      $presonCard,
+      $presonCard,
+      $presonCard,
+    ];
+
+    return [
+      '#theme' => 'server_theme_person_cards',
+      '#items' => $items,
+    ];
   }
 
 }
