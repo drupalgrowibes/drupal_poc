@@ -157,7 +157,11 @@ class NodeGroup extends NodeViewBuilderAbstract {
         ];
 
         $url = Url::fromRoute('og.subscribe', $parameters);
-        $title = $this->t('Hi @username, click here if you would like to subscribe to this group called @title', ['@username' => $user->get('name')->value, '@title' => $entity->getTitle()]);
+        $title = $this->t('Hi @username, click here if you would like to subscribe to this group called @title',
+        [
+          '@username' => $user->get('name')->value,
+          '@title' => $entity->getTitle(),
+        ]);
       }
       else {
 
