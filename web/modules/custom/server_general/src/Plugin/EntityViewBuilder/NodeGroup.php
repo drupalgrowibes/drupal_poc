@@ -12,6 +12,7 @@ use Drupal\Core\Url;
 use Drupal\og\OgMembershipInterface;
 use Drupal\Core\Routing\RedirectDestinationTrait;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\og\MembershipManagerInterface;
 
 /**
  * The "Node Group" plugin.
@@ -48,6 +49,13 @@ class NodeGroup extends NodeViewBuilderAbstract {
   protected $entityTypeManager;
 
   /**
+   * The OG membership manager.
+   *
+   * @var \Drupal\og\MembershipManagerInterface
+   */
+  protected $membershipManager;
+
+  /**
    * Constructs a new nodegroup object.
    *
    * @param \Drupal\Core\Session\AccountInterface $current_user
@@ -56,11 +64,14 @@ class NodeGroup extends NodeViewBuilderAbstract {
    *   The OG access service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
+   * @param \Drupal\og\MembershipManagerInterface $membership_manager
+   *   The OG membership manager service.
    */
-  public function __construct(AccountInterface $current_user, OgAccessInterface $og_access, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(AccountInterface $current_user, OgAccessInterface $og_access, EntityTypeManagerInterface $entity_type_manager, MembershipManagerInterface $membership_manager) {
     $this->currentUser = $current_user;
     $this->ogAccess = $og_access;
     $this->entityTypeManager = $entity_type_manager;
+    $this->membershipManager = $membership_manager;
   }
 
   /**
@@ -70,7 +81,8 @@ class NodeGroup extends NodeViewBuilderAbstract {
     return new static(
       $container->get('current_user'),
       $container->get('og.access'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('og.membership_manager'),
     );
   }
 
@@ -115,17 +127,8 @@ class NodeGroup extends NodeViewBuilderAbstract {
       return $build;
     }
 
-    $storage = $this->entityTypeManager->getStorage('og_membership');
-    $props = [
-      'uid' => $user ? $user->id() : 0,
-      'entity_type' => $entity->getEntityTypeId(),
-      'entity_bundle' => $entity->bundle(),
-      'entity_id' => $entity->id(),
-    ];
-
-    $memberships = $storage->loadByProperties($props);
-    /** @var \Drupal\og\OgMembershipInterface $membership */
-    $membership = reset($memberships);
+    // Get the membership.
+    $membership = $this->membershipManager->getMembership($entity, $user ? $user->id() : 0, []);
 
     if ($membership) {
       $cache_meta->merge(CacheableMetadata::createFromObject($membership));
